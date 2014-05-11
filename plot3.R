@@ -1,0 +1,10 @@
+data <- read.csv(file="../household_power_consumption.txt", sep=';', stringsAsFactors = FALSE)
+data <- data[data$Date == "1/2/2007"|data$Date == "2/2/2007",]
+data$Global_active_power <- na.omit(as.double(data$Global_active_power))
+data$allTime <- strptime(paste(data$Date, data$Time), format='%d/%m/%Y %H:%M:%S')
+png(filename="plot3.png",height=480, width=480)
+plot(data$allTime, data$Sub_metering_1, xlab="", ylab ="Global Active Power (kilowatts)" ,type='l')
+lines(data$allTime, data$Sub_metering_2, col="red")
+lines(data$allTime, data$Sub_metering_3, col="blue")
+legend("topright", col=c("black", "blue", "red"), cex = 0.95, lty=1,legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
+dev.off()
